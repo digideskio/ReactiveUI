@@ -342,6 +342,18 @@ namespace ReactiveUI
         /// identical types (i.e. "MyCoolViewModel") - if the message type is
         /// only used for one purpose, leave this as null.</param>
         void SendMessage<T>(T message, string contract = null);
+
+        /// <summary>
+        /// Sends a single message using the specified Type and contract.
+        /// Consider using RegisterMessageSource instead if you will be sending
+        /// messages in response to other changes such as property changes
+        /// or events.
+        /// </summary>
+        /// <param name="message">The actual message to send</param>
+        /// <param name="contract">A unique string to distinguish messages with
+        /// identical types (i.e. "MyCoolViewModel") - if the message type is
+        /// only used for one purpose, leave this as null.</param>
+        void SendMessage(object message, string contract = null);
     }
 
     /// <summary>

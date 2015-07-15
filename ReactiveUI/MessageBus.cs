@@ -6,6 +6,8 @@ using System.Reactive.Subjects;
 
 namespace ReactiveUI
 {
+    using System.Reflection;
+
     /// <summary>
     /// MessageBus represents an object that can act as a "Message Bus", a
     /// simple way for ViewModels and other objects to communicate with each
@@ -122,6 +124,30 @@ namespace ReactiveUI
         public void SendMessage<T>(T message, string contract = null)
         {
             SetupSubjectIfNecessary<T>(contract).OnNext(message);
+        }
+
+        /// <summary>
+        /// Sends a single message using the specified Type and contract.
+        /// Consider using RegisterMessageSource instead if you will be sending
+        /// messages in response to other changes such as property changes
+        /// or events.
+        /// </summary>
+        /// <typeparam name="T">The type of the message to send.</typeparam>
+        /// <param name="message">The actual message to send</param>
+        /// <param name="contract">A unique string to distinguish messages with
+        /// identical types (i.e. "MyCoolViewModel") - if the message type is
+        /// only used for one purpose, leave this as null.</param>
+        public void SendMessage(object message, string contract = null)
+        {
+            var observable =
+                this.GetType()
+                    .GetMethod("SetupSubjectIfNecessary", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .MakeGenericMethod(message.GetType())
+                    .Invoke(this, new object[] { contract });
+
+            typeof(IObserver<>).MakeGenericType(message.GetType())
+                .GetMethod("OnNext")
+                .Invoke(observable, new object[] { message });
         }
 
         /// <summary>

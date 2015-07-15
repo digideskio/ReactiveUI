@@ -13,6 +13,7 @@ ReactiveUI/Generated/*.cs
 StyleCop.Cache
 TestResults
 _ReSharper*
+[Pp]ackages
 
 Release
 NuGet-Release
