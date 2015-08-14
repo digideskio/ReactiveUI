@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
 using System.Reflection;
-using ReactiveUI;
 
 namespace ReactiveUI
 {
@@ -358,7 +357,7 @@ namespace ReactiveUI
             return eventArgsType;
         }
 
-        internal static IObservable<TProp> ViewModelWhenAnyValue<TView, TViewModel, TProp>(TViewModel viewModel, TView view, Expression<Func<TViewModel, TProp>> property)
+        public static IObservable<TProp> ViewModelWhenAnyValue<TView, TViewModel, TProp>(TViewModel viewModel, TView view, Expression<Func<TViewModel, TProp>> property)
             where TView : IViewFor
             where TViewModel : class
         {
