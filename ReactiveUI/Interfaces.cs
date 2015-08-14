@@ -471,7 +471,7 @@ namespace ReactiveUI
         T ViewModel { get; set; }
     }
 
-    internal interface IWantsToRegisterStuff
+    public interface IWantsToRegisterStuff
     {                       
         void Register();
     }
